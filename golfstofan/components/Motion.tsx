@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 /**
  * Valmyndin fær bakgrunn þegar skrunað er og fasti hnappurinn á síma birtist
@@ -8,6 +9,8 @@ import { useEffect } from "react";
  * eins og gras sem er lagt, þegar þær koma fyrst í mynd. Efnið er alltaf sýnilegt án skriftu.
  */
 export default function Motion() {
+  // Keyrt aftur við hverja síðuskiptingu svo nýjar myndir og listar fái sína hreyfingu.
+  const path = usePathname();
   useEffect(() => {
     const root = document.documentElement;
 
@@ -47,7 +50,7 @@ export default function Motion() {
       },
       { threshold: 0.25 }
     );
-    document.querySelectorAll(".wipe").forEach((el) => {
+    document.querySelectorAll(".wipe, .stagger").forEach((el) => {
       // Myndir sem eru þegar í mynd við hleðslu fá ekki rúllu.
       if (el.getBoundingClientRect().top < window.innerHeight) {
         el.classList.add("in");
@@ -62,6 +65,6 @@ export default function Motion() {
       cleanup();
       io.disconnect();
     };
-  }, []);
+  }, [path]);
   return null;
 }

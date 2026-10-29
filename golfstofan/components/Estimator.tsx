@@ -24,12 +24,13 @@ const fromSlider = (s: number) => {
 
 type Status = "idle" | "contact" | "sending" | "sent" | "mailto" | "error";
 
-export default function Estimator() {
+export default function Estimator({ initial = "gardur" }: { initial?: ProjectType }) {
   const uid = useId();
-  const [type, setType] = useState<ProjectType>("gardur");
-  const [area, setArea] = useState(80);
-  const [areaText, setAreaText] = useState("80");
-  const [surface, setSurface] = useState<Surface>("mold");
+  const start = PROJECTS.find((p) => p.id === initial) ?? PROJECTS[0];
+  const [type, setType] = useState<ProjectType>(start.id);
+  const [area, setArea] = useState(start.defaultArea);
+  const [areaText, setAreaText] = useState(String(start.defaultArea));
+  const [surface, setSurface] = useState<Surface>(start.defaultSurface);
   const [dims, setDims] = useState(false);
   const [len, setLen] = useState("");
   const [wid, setWid] = useState("");

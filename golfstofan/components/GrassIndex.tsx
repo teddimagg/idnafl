@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 export type Grass = {
@@ -10,6 +11,8 @@ export type Grass = {
   text: string;
   img: string;
   href: string;
+  /** Texti á hnappnum; sjálfgefið er að reikna verð með grasinu. */
+  cta?: string;
 };
 
 export default function GrassIndex({ items }: { items: Grass[] }) {
@@ -81,9 +84,9 @@ export default function GrassIndex({ items }: { items: Grass[] }) {
               <div className="gi-more">
                 <div>
                   <p>{it.text}</p>
-                  <a className="gi-cta" href={it.href}>
-                    Reikna verð með {it.name}
-                  </a>
+                  <Link className="gi-cta" href={it.href}>
+                    {it.cta ?? `Reikna verð með ${it.name}`}
+                  </Link>
                 </div>
               </div>
             </li>
